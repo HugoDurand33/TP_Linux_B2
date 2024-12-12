@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  web:
+    image: python_app
+    build: . 
+    environment:
+      PORT: 80
+      DB_HOST: "mysql"
+    ports :
+      - 8081:80
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./seed.sql:/docker-entrypoint-initdb.d/seed.sql
+  phpmyadmin:
+    image: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+    ports:
+      - 8080:80
