@@ -2,5 +2,5 @@
 
 🌞 docker-compose.yml
 
-[test](tp 2\TP_Linux_tp2\docker-compose.yml)
+[test](TP_Linux_tp2/docker-compose.yml)
 
