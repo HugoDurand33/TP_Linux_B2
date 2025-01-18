@@ -105,5 +105,74 @@ backup:x:1005:1006::/var/backup:/usr/bin/nologin
 🌞 La conf sudo doit être la suivante
 
 ```
+eve     ALL=(backup)    /bin/ls
 
+%admins ALL=(ALL)       NOPASSWD: ALL
+```
+
+🌞 Le dossier /var/backup
+
+- choisir des permissions les plus restrictives possibles (comme toujours, la base quoi) sachant que
+
+```
+[hugo@localhost ~]$ sudo chmod 600 /var/backup/
+```
+
+🌞 Mots de passe des users, prouvez que
+
+- ils sont hashés en SHA512 (c'est violent)
+
+```
+[hugo@localhost ~]$ sudo passwd -S bob
+bob PS 2025-01-13 0 99999 7 -1 (Password set, SHA512 crypt.)
+```
+
+🌞 User eve
+
+- elle ne peut que saisir sudo ls et rien d'autres avec sudo
+
+```
+[eve@localhost ~]$ sudo -u backup ls
+ls: cannot open directory '.': Permission denied
+[eve@localhost ~]$ sudo -u backup cat
+Sorry, user eve is not allowed to execute '/bin/cat' as backup on localhost.localdomain.
+```
+
+- vous pouvez faire sudo -l pour voir vos droits sudo actuels
+
+```
+[eve@localhost ~]$ sudo -l
+User eve may run the following commands on localhost:
+    (backup) /bin/ls
+```
+
+## III. Gestion du temps
+
+🌞 Je vous laisse gérer le bail vous-mêmes
+
+- déterminez quel service sur Rocky Linux est le client NTP par défaut
+
+```
+[hugo@localhost ~]$ systemctl list-units -t service -a | grep chrony
+  chronyd.service
+                loaded    active   running NTP client/server
+```
+
+- demandez à ce service de se synchroniser sur les serveurs français du NTP Pool Project
+
+```
+fr.pool.ntp.org
+```
+
+- assurez-vous que vous êtes synchronisés sur l'heure de Paris
+
+```
+[hugo@localhost ~]$ timedatectl
+               Local time: Sat 2025-01-18 18:43:59 CET
+           Universal time: Sat 2025-01-18 17:43:59 UTC
+                 RTC time: Sat 2025-01-18 17:43:59
+                Time zone: Europe/Paris (CET, +0100)
+System clock synchronized: yes
+              NTP service: active
+          RTC in local TZ: no
 ```
