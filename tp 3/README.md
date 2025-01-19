@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-# 2. Repackaging
+## 2. Repackaging
 
 🌞 Ecrivez un Vagrantfile qui lance une VM à partir de votre Box
 
@@ -33,5 +33,12 @@ Vagrant.configure("2") do |config|
 end
 ```
 
+## 3. Moult VMs
+
+🌞 Adaptez votre Vagrantfile pour qu'il lance les VMs suivantes (en réutilisant votre box de la partie précédente)
+
+[Vagrantfile A](partie1/Vagrantfile-3A/Vagrantfile) 
+
+[Vagrantfile B](partie1/Vagrantfile-3B/Vagrantfile) 
 
 
